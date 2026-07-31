@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>O Nosso Cantinho ✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #07050d;
+      color: #f7e7d6;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: background 0.8s ease;
+      user-select: none;
+    }
+
+    body.light-on {
+      background-color: #140f21;
+    }
+
+    /* CONTAINER RESPONSIVO */
+    .room-container {
+      position: relative;
+      width: 100vw;
+      max-width: 450px;
+      height: 90vh;
+      max-height: 750px;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 200, 120, 0.05), transparent 60%);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* JANELA & ESTRELAS */
+    .window {
+      position: absolute;
+      top: 5%;
+      left: 8%;
+      width: 42%;
+      height: 35%;
+      background: linear-gradient(to bottom, #040308, #0e0b1d);
+      border: 8px solid #241610;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+      cursor: pointer;
+    }
+
+    .window-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-right: 3px solid #241610;
+      border-bottom: 3px solid #241610;
+      top: 0; left: 0;
+      pointer-events: none;
+      transform: scaleX(0.5);
+      transform-origin: left;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.9; transform: scale(1.3); }
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 30px;
+      background: linear-gradient(to bottom, #fff, transparent);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .shooting-star.animate {
+      animation: shoot 0.8s ease-out;
+    }
+
+    @keyframes shoot {
+      0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+      100% { transform: translate(120px, 120px) rotate(-45deg); opacity: 0; }
+    }
+
+    /* POST-IT NA PAREDE */
+    .post-it {
+      position: absolute;
+      top: 7%;
+      right: 12%;
+      width: 75px;
+      height: 75px;
+      background: #fdfd96;
+      color: #222;
+      padding: 8px;
+      font-size: 0.68rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.6);
+      transform: rotate(-5deg);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: transform 0.2s;
+    }
+
+    .post-it:active { transform: scale(0.95); }
+
+    /* MESA */
+    .table {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 35%;
+      background: linear-gradient(to bottom, #22120b, #100704);
+      border-top: 5px solid #331c12;
+    }
+
+    /* ABAJUR INTERATIVO */
+    .lamp {
+      position: absolute;
+      right: 10%;
+      bottom: 30%;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .lamp-shade {
+      width: 70px;
+      height: 48px;
+      background: #c7883c;
+      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+      transition: all 0.3s ease;
+    }
+
+    .lamp-base {
+      width: 8px;
+      height: 60px;
+      background: #694825;
+      margin: 0 auto;
+    }
+
+    .lamp-foot {
+      width: 40px;
+      height: 8px;
+      background: #402b15;
+      border-radius: 4px;
+      margin: 0 auto;
+    }
+
+    .lamp-glow {
+      position: absolute;
+      top: 5%;
+      right: -20%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255, 215, 130, 0.45) 0%, rgba(255, 180, 80, 0.1) 45%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    body.light-on .lamp-glow { opacity: 1; }
+    body.light-on .lamp-shade {
+      background: #ffe09e;
+      box-shadow: 0 0 30px #ffb347;
+    }
+
+    /* CADERNO DE ESTUDO */
+    .study-material {
+      position: absolute;
+      left: 10%;
+      bottom: 22%;
+      width: 65px;
+      height: 12px;
+      background: #2b4c7e;
+      border-radius: 2px;
+      cursor: pointer;
+      box-shadow: 1px 2px 5px rgba(0,0,0,0.6);
+    }
+
+    .study-material::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 4px;
+      width: 57px;
+      height: 3px;
+      background: #fff;
+    }
+
+    /* TELEFONE */
+    .phone {
+      position: absolute;
+      top: 22%;
+      right: 14%;
+      width: 35px;
+      height: 45px;
+      background: #8b5a2b;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+
+    .phone::before {
+      content: '💬';
+      font-size: 1.1rem;
+      position: absolute;
+      top: 8px;
+      left: 7px;
+    }
+
+    /* CACHORRINHO DORMINHO (SUBSTITUIU O GATO) */
+    .dog {
+      position: absolute;
+      left: 32%;
+      bottom: 25%;
+      width: 52px;
+      height: 26px;
+      background: #c48b52;
+      border-radius: 15px 15px 5px 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .dog-head {
+      position: absolute;
+      left: -10px;
+      top: 2px;
+      width: 22px;
+      height: 22px;
+      background: #c48b52;
+      border-radius: 50%;
+    }
+
+    .dog-ear {
+      position: absolute;
+      top: 4px;
+      left: -2px;
+      width: 8px;
+      height: 14px;
+      background: #8c5d31;
+      border-radius: 5px;
+      transform: rotate(15deg);
+    }
+
+    /* CANECA FUMEGANTE */
+    .mug-container {
+      position: absolute;
+      right: 35%;
+      bottom: 24%;
+      cursor: pointer;
+    }
+
+    .mug {
+      width: 28px;
+      height: 32px;
+      background: #e07a7a;
+      border-radius: 0 0 8px 8px;
+      position: relative;
+    }
+
+    .steam {
+      position: absolute;
+      top: -15px;
+      left: 7px;
+      width: 6px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      filter: blur(3px);
+      animation: rise 2s infinite ease-in-out;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(0); opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-20px); opacity: 0; }
+    }
+
+    /* CARDS/BALÕES DE MENSAGEM */
+    .message-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(15, 11, 23, 0.97);
+      border: 1px solid rgba(255, 215, 130, 0.35);
+      padding: 24px;
+      border-radius: 18px;
+      text-align: center;
+      width: 88%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+    }
+
+    .message-card.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .message-card h2 {
+      font-size: 1.2rem;
+      color: #ffd993;
+      margin-bottom: 10px;
+    }
+
+    .message-card p {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: #ebdcd0;
+      margin-bottom: 18px;
+    }
+
+    .close-btn {
+      background: #e07a7a;
+      border: none;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 12px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+    }
+
+        /* Adicione o rabinho no CSS */
+    .dog-tail {
+    position: absolute;
+    right: -6px;
+    bottom: 8px;
+    width: 10px;
+    height: 4px;
+    background: #c48b52;
+    border-radius: 4px;
+    transform-origin: left center;
+    animation: wag 1s infinite alternate ease-in-out;
+    }
+
+    @keyframes wag {
+    0% { transform: rotate(-20deg); }
+    100% { transform: rotate(30deg); }
+    }
+
+        /* Faz todos os objetos clicáveis darem um 'pop' ao tocar */
+    .post-it, .phone, .lamp, .study-material, .dog, .mug-container, .window {
+    transition: transform 0.15s ease-in-out;
+    }
+
+    .post-it:active, .phone:active, .lamp:active, .study-material:active, .dog:active, .mug-container:active, .window:active {
+    transform: scale(0.88);
+    }
+
+    .floating-heart {
+  position: absolute;
+  font-size: 1.2rem;
+  pointer-events: none;
+  animation: floatUp 1s ease-out forwards;
+  z-index: 200;
+}
+
+    @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(0.8); }
+    100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
+    }
+
+    .moon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+    .room-title {
+  text-align: center;
+  font-size: 1rem;
+  color: #ffd993;
+  margin-top: 15px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+  </style>
+</head>
+<body>
+
+  <div class="room-container">
+    <!-- Janela para o Céu -->
+    <div class="window" id="window" title="Toque para ver uma estrela cadente">
+  <div class="moon"></div> <!-- Adicione aqui -->
+  <div class="window-grid"></div>
+  <div class="shooting-star" id="shooting-star"></div>
+  <h1 class="room-title">mensagens para anninha :b</h1>
+</div>
+
+    <!-- Post-it -->
+    <div class="post-it" id="postit">
+      📌 Se o dia for pesado...
+    </div>
+
+    <!-- Ícone de Telefone -->
+    <div class="phone" id="phone" title="Aviso importante"></div>
+
+    <!-- Abajur -->
+    <div class="lamp" id="lamp">
+      <div class="lamp-shade"></div>
+      <div class="lamp-base"></div>
+      <div class="lamp-foot"></div>
+    </div>
+
+    <div class="lamp-glow"></div>
+
+    <div class="table"></div>
+
+    <!-- Caderno de Estudos -->
+    <div class="study-material" id="study" title="Seus estudos"></div>
+
+        <div class="dog" id="dog" title="Au au!">
+    <div class="dog-head">
+        <div class="dog-ear"></div>
+    </div>
+    <div class="dog-tail"></div> <!-- Adicione essa linha aqui -->
+    </div>
+
+    <!-- Caneca -->
+    <div class="mug-container" id="mug">
+      <div class="steam"></div>
+      <div class="mug"></div>
+    </div>
+
+    <div class="hint">✨ Toque nos objetos do quarto para ler as notas</div>
+
+    <!-- Card de Mensagem -->
+    <div class="message-card" id="card">
+      <h2 id="card-title">Título</h2>
+      <p id="card-text">Conteúdo...</p>
+      <button class="close-btn" id="close-btn">Fechar. :b</button>
+    </div>
+  </div>
+
+  <script>
+    // ESTRELAS NA JANELA
+    const windowEl = document.getElementById('window');
+    for (let i = 0; i < 18; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.width = `${Math.random() * 2.5 + 1}px`;
+      star.style.height = star.style.width;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+      windowEl.appendChild(star);
+    }
+
+    // ESTRELA CADENTE
+    const shootingStar = document.getElementById('shooting-star');
+    windowEl.addEventListener('click', () => {
+      shootingStar.style.top = `${Math.random() * 40}%`;
+      shootingStar.style.left = `${Math.random() * 30}%`;
+      shootingStar.classList.add('animate');
+      setTimeout(() => shootingStar.classList.remove('animate'), 800);
+    });
+
+    // ABAJUR
+    const lamp = document.getElementById('lamp');
+    let isLightOn = false;
+    lamp.addEventListener('click', () => {
+      isLightOn = !isLightOn;
+      document.body.classList.toggle('light-on', isLightOn);
+    });
+
+    // POP-UPS
+    const card = document.getElementById('card');
+    const cardTitle = document.getElementById('card-title');
+    const cardText = document.getElementById('card-text');
+    const closeBtn = document.getElementById('close-btn');
+
+    function showMessage(title, text) {
+  cardTitle.innerText = title;
+  cardText.innerText = text;
+  card.classList.add('active');
+
+  // Animação de coraçõezinhos subindo do card
+  for (let i = 0; i < 5; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerText = ['✨', '💖', '🐾', '⭐'][Math.floor(Math.random() * 4)];
+    heart.style.left = `${50 + (Math.random() * 40 - 20)}%`;
+    heart.style.top = `${40 + (Math.random() * 20 - 10)}%`;
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+  }
+}
+
+    closeBtn.addEventListener('click', () => card.classList.remove('active'));
+
+    // 1. O CACHORRINHO (A piada)
+    document.getElementById('dog').addEventListener('click', () => {
+      showMessage(
+        "Aviso do Cachorrinho",
+        "Você alimenta e cuida de todos os cachorros que vê na rua... mas e esse cachorrinho aqui (eu)? vai querer alimentar não? :c não querendo mendigar. mas sim querendo atenção."
+      );
+    });
+
+    // 2. ÍCONE DE CHAT / TELEFONE
+    document.getElementById('phone').addEventListener('click', () => {
+      showMessage(
+        "pls :)",
+        "Por favor, tira da cabeça essa ideia de que está me incomodando. Você NUNCA me incomoda. Pelo contrário: eu amo quando você me chama, e rezo para que me incomode cada vez mais!"
+      );
+    });
+
+    // 3. CADERNO DE ESTUDOS
+    document.getElementById('study').addEventListener('click', () => {
+      showMessage(
+        "estudos",
+        "Tenho um orgulho enorme de ver o quanto você estuda e se dedica. Mas prometa que vai dar uma pausinha pra descansar também, tá? se não eu vou ficar ainda mais preocupado."
+      );
+    });
+
+    // 4. POST-IT NA PAREDE
+    document.getElementById('postit').addEventListener('click', () => {
+      showMessage(
+        "Atenção:",
+        "Não precisa carregar seus dias difíceis ou o cansaço sozinha. Estarei aqui sempre que precisar de algo. Não só eu mas seus amigos tambem. Saiba que existe muita gente que se importa e MUITO com voce, eu mesmo me importo bastente com voce. se voce ta se divertindo. se voce esta triste. eu SEMPRE me preocuparei."
+      );
+    });
+
+    // 5. CANECA
+    document.getElementById('mug').addEventListener('click', () => {
+      showMessage(
+        "Seu Ritmo",
+        "Não se preocupe se a gente não sai tanto por causa da sua rotina. Ter 5 minutinhos da sua atenção no final do dia já faz meu dia valer a pena."
+      );
+    });
+  </script>
+</body>
+</html>
