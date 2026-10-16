@@ -1503,7 +1503,7 @@ namespace SteveCube
             {
                 Vector3 dir = Random.onUnitSphere;
                 Spawn(CubeMesh(), FxMaterial(), c + dir * 0.4f, 0.07f, 0.01f, Color.white, main,
-                      dir * Random.Range(0.8f, 2.2f), -1.2f, 0.9f, Random.Range(1.2f, 2f), true);
+                      dir * Random.Range(0.8f, 2.2f), -1.2f, 0.9f, Random.Range(1.2f, 3f), true);
             }
         }
 
