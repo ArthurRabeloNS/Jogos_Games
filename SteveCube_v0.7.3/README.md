@@ -9,5 +9,5 @@ Please choose your preferred language / Por favor, escolha o seu idioma preferid
 
 ## License / Licença
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.  
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.txt](LICENSE.txt) para mais detalhes.
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE) file for details.  
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.txt](LICENSE) para mais detalhes.
