@@ -187,4 +187,4 @@ Mod feito para uso offline/local, para diversão. Pode quebrar com atualizaçõe
 
 ## Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE.txt) para mais detalhes.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
